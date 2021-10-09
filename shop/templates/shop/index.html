@@ -1,0 +1,260 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} S'op Window{% endblock %}
+{% block alert %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holla Welcome!</strong> YOU ARE MOST WELCOME TO YOUR OWN STORE
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endblock %}
+
+{% block css %}
+<style>
+
+
+    .col-md-3, col-xs-3, col-sm-3 {
+        display: inline-block;
+        margin-left: 81px;
+        margin-right: -177px;
+        padding-right: 3px;
+        padding-left: 25px;
+    }
+
+    .my-4{
+        padding: 148px, 10px, 10px, 10px;
+    }
+
+    .col-md-3 img{
+        padding-left: 4px;
+        padding-top: 2px;
+        width:160px;
+        height:130px;
+    }
+
+    .carousel-indicators {
+        position: absolute;
+        right: 0;
+        bottom: 0px;
+        margin-bottom: -16px;
+        left: 0;
+        z-index: 15;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: center;
+        justify-content: center;
+        padding-left: 0;
+        margin-right: 47%;
+        margin-left: 47%;
+        list-style: none;
+    }
+
+    body .carousel-control-prev-icon, body .carousel-control-next-icon{
+        background-color: red;
+        width: 15px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .carousel-indicators .active{
+        position: relative;
+        background-color: blue;
+    }
+
+    .carousel-indicator{
+        position: relative;
+    }
+
+    .btn{
+        padding: 0px;
+    }
+
+    body .carousel-indicators{
+        bottom: 0px;
+    }
+
+    .carousel-control-next, .carousel-control-prev {
+        position: absolute;
+        top: 0px;
+        bottom: auto;
+    }
+
+    .btn-primary:hover{
+        background-image: linear-gradient(60deg, #56e400, #87ff52, #ff0000, #ff0029b3);
+        animation: bganimation 2s infinite;
+        background-size: 400%;
+    }
+
+    body .no-padding{
+        padding-left: 8px;
+        padding-right: 0px;
+    }
+
+    .carousel slide{
+        padding-top: 50px;
+    }
+
+    .product_image{
+        position:relative;
+    }
+    .price{
+        position: absolute;
+        margin-top: -20px;
+        left: 50%;
+        background-image: linear-gradient(180deg, #39fd00, #b4ff00b3);
+        animation: bganimation 4s finite;
+        background-size: 200%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        font-size: 20px;
+        border-style:double;
+    }
+
+    .spec_offer{
+        position: absolute;
+        display: block;
+        background-color: #ffe900a8;
+        padding-left: 10px;
+        padding-right: 8px;
+        margin-left: 10px;
+        padding-bottom: 4px;
+        text-decoration: overline;
+        border-style: double;
+        margin-top: -2px;
+        background-image: linear-gradient(60deg, #ff0029b3, #ffb100bf, #87ff52, #d1ff00bf, #ff0000bf, #87ff52);
+        animation: bganimation 8s infinite;
+        background-size: 400%;
+    }
+    @keyframes bganimation{
+        0%{
+        background-position: 0% 100%;
+        }
+        50%{
+        background-position: 80% 50%;
+        }
+        100%{
+        background-position:10% 50%;
+        }
+    }
+
+    .product_image{
+        position: relative;
+    }
+
+    img{
+        opacity:1;
+        display: block;
+        transition: .5s rise;
+    }
+
+    .overlay{
+        opacity: 0;
+    }
+
+    .product_image:hover img{
+        opacity: 0.5;
+    }
+
+    .product_image:hover .overlay{
+        opacity: 1;
+    }
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+<!--  Slideshow starts here -->
+
+{% for product, range, NSlides in allprods %}
+<h3 class="my-4" style="padding-left:10px"> {{product.0.category}}</h3>
+<div id="demo{{forloop.counter}}" class="carousel slide my-4" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+        {% for i in range %}
+        <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+        {% endfor %}
+    </ul>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+
+            {% for i in product %}
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="card" style="width: 14rem;">
+                    <div class="product_image">
+                        {% if i.special_offer %}
+                        <div class="spec_offer text-center"><a><b>On Offer </b></a></div>
+                        {% endif %}
+                        <img src='/media/{{i.image}}'  class="card-img-top" alt="...">
+                        <div class="overlay">
+                        <div class="price"><b>Rs.{{i.price}}</b></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}-</h5>
+                        <p class="card-text">{{i.desc|slice:"0:32"}}....</p>
+                        <button id="pr{{i.id}}" class="btn btn-primary cart">ADD To Cart</button>
+                        <a href="/shop/productview/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button></a>
+                    </div>
+                </div>
+            </div>
+
+            {% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
+        </div>
+        <div class="carousel-item">
+        {% endif %}
+
+        {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- left and right controls for slide -->
+    <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+<style>
+    console.log('working');
+    if(localStorage.getItem('cart') == null){
+        var cart = {};
+    };
+    else{
+        cart = JSON.parse(localStorage.getItem('cart'));
+        document.getElementById('cart').innerHTML = Object.keys('cart').length;
+    }
+
+
+    $('.cart').click(function(){
+    var idstr = this.id.toString();
+    if (cart[idstr] == undefined){
+        qty = 1;
+        name = document.getElementById('name'+idstr).innerHTML;
+        cart[idstr] = [qty];
+    }
+
+    else{
+        qty = cart[idstr][0] + 1;
+        cart[idstr] = [qty];
+    }
+
+    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+    });
+</style>
+{% block js %}
+{% endblock %}

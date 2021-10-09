@@ -1,0 +1,148 @@
+{% extends "shop/basic.html" %}
+
+{% block title %} My Account{% endblock %}
+{% block alert %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert"
+     xmlns:background-color1="http://www.w3.org/1999/xhtml">
+    <div class="alr">
+    <strong>Hmm..!</strong> LET'S SEE MY DETAILS
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="false">&times;</span>
+    </button>
+</div>
+{% endblock %}
+{% block css %}
+<style>
+    .alr{
+    opacity:1;
+    }
+    .form-group{
+    opacity:0.6;
+    }
+
+</style>
+{% endblock %}
+
+{% block body%}
+
+{% if user.is_authenticated != True %}
+<div class="container">
+<form action="/accounts/register" method="post">
+    {% csrf_token %}
+        <b style="Font-size:20px;">You Are Not Logged In Yet! Login At The Bottom Of The Page <br>
+            Or Register Here!</b>
+            <div style="color:red;">
+                {% for message in messages %}
+                <b>{{message}}*</b>
+                {% endfor %}
+            </div>
+        <div class="form-group">
+            <label for="Name"></label>
+            <input type="text" name="username" class="form-control" id="Name" placeholder="How Should We Call You*" >
+
+        </div>
+
+        <div class="form-group">
+            <label for="first_name"></label>
+            <input type="text" name="first_name" class="form-control" id="first_name" placeholder="first_name*">
+        </div>
+
+        <div class="form-group">
+            <label for="last_name"></label>
+            <input type="text" name="last_name" class="form-control" id="last_name" placeholder="last_name*">
+        </div>
+
+        <div class="form-group">
+            <label for="Email"></label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Your Email*">
+        </div>
+
+        <div class="form-group">
+            <label for="password1"></label>
+            <input type="password" name="password1" class="form-control" id="password1" placeholder="Password*">
+        </div>
+
+        <div class="form-group">
+            <label for="password2"></label>
+            <input type="password" name="password2" class="form-control" id="password2" placeholder="Password Again*">
+        </div>
+
+        <strong style="background-color:red; font-size:20px;border-bottom-left-radius: px; border-bottom-right-radius: 10px; border-top-right-radius: 10px; border-top-left-radius: 10px;">GENDER:</strong>
+        <div class="form-group">
+            <label for="female"></label>
+            <input type="color" name="female" class="form-control" id="female">
+        </div>
+
+        <button type="submit" class="btn btn-outline-success" id="submit">✔Go..</button>
+
+</form>
+<form action="/accounts/login" method="post">
+    {% csrf_token %}
+
+
+    <h3 style="color:black;"><b>OR <span>LOG</span><span style="background-color:yellow; opacity:0.5;">IN!</span></b></h3>
+
+    <div style="color:red;">
+        {% for message in messages %}
+        <b>{{message}}*</b>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="log-Name"></label>
+        <input type="text" name="username" class="form-control" id="log-Name" placeholder="Username*" >
+    </div>
+
+    <div class="form-group">
+        <label for="log-password"></label>
+        <input type="password" name="password" class="form-control" id="log-password" placeholder="Password*">
+    </div>
+
+    <button type="submit" class="btn btn-outline-success" id="">✔Let's Go..</button>
+</form>
+</div>
+{% else %}
+    <style> .main{
+    height: -webkit-fill-available;
+    }
+
+    </style>
+    <div class="container">
+        <h1>Hello {{user.first_name}}, Welcome Back....Let's see What's going on Here....</h1>
+
+    </div>
+
+    <li>User Name - - {{user.username}}</li><br>
+    <li>first_name -- {{user.first_name}}</li><br>
+    <li>last_name - - {{user.last_name}}</li><br>
+    <li>My Email Id -- {{user.email}}</li><br>
+    <li>My Password -- Nope! I wi<span style="background-color: yellow; opacity:0.6">ll not tel</span>l you that {{user.username}}</li>
+
+    <form action="/accounts/login" method="post">
+        {% csrf_token %}
+    
+    
+        <h3 style="color:black;"><b><span>LOG</span><span style="background-color:yellow; opacity:0.5;">IN!</span>With Another Account</b></h3>
+    
+        <div style="color:red;">
+            {% for message in messages %}
+            <b>{{message}}*</b>
+            {% endfor %}
+        </div>
+    
+        <div class="form-group">
+            <label for="log-Name"></label>
+            <input type="text" name="username" class="form-control" id="log-Name" placeholder="Username*" >
+        </div>
+    
+        <div class="form-group">
+            <label for="log-password"></label>
+            <input type="password" name="password" class="form-control" id="log-password" placeholder="Password*">
+        </div>
+    
+        <button type="submit" class="btn btn-outline-success" id="">✔Let's Go..</button>
+    </form>
+
+{% endif %}
+{% endblock%}

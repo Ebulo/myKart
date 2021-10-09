@@ -1,0 +1,106 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}Check Out{% endblock %}
+{% block css %}
+
+<style>
+    .mainFor{
+        height: -webkit-fill-available;
+    }
+
+    .alert{
+        position: absolute;
+        clear: fix;
+    }
+    .card{
+        clear: right;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="mainFor">
+<h4>My Selected Product</h4>
+
+<div class="container">
+    <div class="col my-4">
+        <div>
+            <ul class="list-group" id="items">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<form action="/accounts/account" method="post">{% csrf_token %}
+    <div class="container">
+        <h5> <b>Please Fill in The Below Details*</b></h5>
+
+        <div class="form-group">
+            <label for="Name"></label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Type Your Name*" >
+        </div>
+
+        <div class="form-group">
+            <label for="phone"></label>
+            <input type="tel" name="phone" class="form-control" id="phone" placeholder="Your Phone Number*">
+        </div>
+
+        <div class="form-group">
+            <label for="ad1"></label>
+            <input name="desc" class="form-control" id="ad1" placeholder="Address-Line1*">
+        </div>
+
+        <div class="form-group">
+            <label for="ad2"></label>
+            <input name="desc" class="form-control" id="ad2" placeholder="Address-Line2">
+        </div>
+
+        <div>
+            <label></label>
+            <input type="number" name="Zip_code" placeholder="Zip_Code*"><br>
+        </div>
+
+        <div>
+            <label></label>
+            <input type="text" name="State" placeholder="State*"><br>
+        </div>
+
+        <div>
+            <label></label>
+            <input type="text" name="City" placeholder="City*"><br>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success" id="submit">✔Submit</button>
+    </div>
+</form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+console.log('working');
+a = localStorage.getItem('cart');
+console.log(a);
+var cart = {};
+
+if(localStorage.getItem('cart') == null){
+    var cart = {}
+}
+else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+}
+
+console.log(cart);
+for(item in cart){
+    let name = cart[item][1];
+    let qty = cart[item][0];
+    mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${name}
+                    <span class="badge badge-primary badge-pill">${qty}</span>
+                </li>`
+    $('#items').append(mystr);
+}
+
+</script>
+
+{% endblock %}

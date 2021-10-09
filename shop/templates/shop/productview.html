@@ -1,0 +1,94 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}My Selection{% endblock %}
+{% block css %}
+<style>
+    .main{
+    height: -webkit-fill-available;
+    }
+
+    .xd{
+    margin-left:10px;
+    padding-left:10px;
+    margin-top: 20px;
+    padding-top: 10px;
+    }
+    .btn-primary:hover{
+    color:#fff;
+    background-color:rgba(40, 219, 0, 1);
+    }
+    .btn{
+    margin-top: 10px;
+    margin-left:40px;
+    }
+    .b1{
+    display: block;
+    position: relative;
+    opacity:1;
+    }
+    .wrapper{
+    position: absolute;
+    opacity: 0;
+    display:block;
+    margin-top: -24px;
+    margin-left: 100px;
+    }
+    .b1:hover{
+    opacity: 0.4;
+    }
+    .wrapper:hover{
+    opacity: 1;
+
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="xd">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4 my-2">
+            <div class="row">
+                <a href="/media/{{product.image}}"><img src="/media/{{product.image}}" width="250px" height="340px" id="img1"></a>
+            </div>
+            {% if user.is_authenticated %}
+
+            <a class="btn btn-primary cart b1" href="/shop/checkout" id="{{product.id}}" >Buy Now</a>
+            <div class="wrapper">
+                <div class="price">
+                    {{product.price}}
+                </div>
+            </div>
+            <button class="btn btn-primary cart">Or Add To Cart</button>
+            {% else %}
+            <a class="btn btn-primary cart b1" href="/accounts/login" >Buy Now</a>
+            <div class="wrapper">
+                <div class="price">
+                    {{product.price}}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-8" >
+                <h4 style="color:black;"><b>{{product.product_name}}</b></h4>
+                <b>Price -{{product.price}}</b><br>
+                <p>{{product.desc}}</p>
+        </div>
+
+
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    x = getElementById('img1');
+    x.onmouseover{
+        x.zoom
+    }
+
+
+</script>
+{% endblock %}
+

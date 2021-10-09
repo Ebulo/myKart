@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    {% load static %}
+
+    <title>{% block title %} {% endblock %}</title>
+
+    {% block css %} {% endblock %}
+</head>
+    <style>
+    .main{
+        background-image: url({% static 'shop/e.jpg' %});
+        background-size: cover;
+        height: min-content;
+        background-opacity:0.6;
+
+    }
+    .h{
+        background-image: linear-gradient(60deg, #56e400, #87ff52,#17a2b8, #ff0000, #ff0029b3,#17a2b8, #56e400, #56e400, #87ff52, #ff0000, #ff0029b3, #56e400, #87ff52, #ff0000, #ff0029b3);
+        animation: bganimation 4s infinite;
+        background-size: 400%;
+        margin-bottom:0px;
+        padding-bottom:-10px;
+        padding-top: 4px;
+
+    }
+    h4, h1{
+        margin-bottom: 0.0rem;
+        margin-left: 20px;
+        padding-left: 36%;
+        -webkit-text-stroke-width: thick;
+        -webkit-mask-image: linear-gradient(45deg, #38a73c, yellow, orange, transparent);
+    }
+    p{
+        background-color: yellow;
+        border-radius: 4%;
+
+    }
+    .alert{
+        opacity: 0.6;
+    }
+
+    #logout{
+        background-color: red;
+        border-bottom-left-radius: px;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        padding-top:0px;
+        border:single;
+    }
+    .mr-auto, .mx-auto {
+        margin-right: 706px;
+    }
+
+
+    </style>
+
+
+
+
+<body>
+<div class="main">
+    <div class="h">
+    <h1>Holla, Solve iT! Yeah</h1>
+    </div>
+
+
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: black; opacity:0.9;">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'shop/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Up">
+        </a>
+        {% if user.is_authenticated %}
+        <a class="navbar-brand" href="/accounts/register">😉Hi! </a><a style="Font-size:20px;"> {{user.username}}</a>😄😃
+        {% else %}
+        <a class="navbar-brand" href="/accounts/register">😋 My Account!</a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Refresh</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </a><div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <a class="dropdown-item" href="/shop/contact">Contact Us</a>
+                        <a class="dropdown-item" href="/shop/about">About Us</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/shop/tracker">Track Item</a>
+
+                    </div>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link cart" href="/shop/checkout">My Cart(<span id="cart">0</span>)</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+            <a class="navbar-brand" id="logout" href="/accounts/logout">Logout</a>
+            {% endif %}
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    {% block alert %} {% endblock %}
+
+    {% block body %} {% endblock %}
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+console.log('working')
+if(localStorage.getItem('cart') == null){
+var cart = {}
+}
+else{
+cart = JSON.parse(localStorage.getItem('cart'));
+document.getElementById('cart').innerHTML = Object.keys('cart').length;
+}
+
+$('.cart').click(function(){
+var idstr = this.id.toString();
+console.log(idstr);
+if (cart[idstr] != undefined){
+qty = cart[idstr][0] + 1;
+name = document.getElementById('name'+idstr).innerHTML;
+cart[idstr] = [qty, name];
+}
+
+else{
+qty = 1;
+name = document.getElementById('name'+idstr).innerHTML;
+cart[idstr] = [qty, name];
+}
+console.log(cart);
+localStorage.setItem('cart', JSON.stringify(cart));
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+});
+
+</script>
+{% block js %}
+
+{% endblock %}
+</div>
+</body>
+</html>

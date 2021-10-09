@@ -1,0 +1,71 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block css %}
+<style>
+    .mainFor{
+    height: -webkit-fill-available;
+    }
+    .b{
+    display: block;
+    padding-left: 530px;
+    padding-right: 530px;
+    }
+</style>
+{% endblock %}
+
+{% block alert %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Let's Solve!</strong> DON'T WORRY WE ARE ALWAYS THERE TO HELP YOU
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="mainFor">
+<form action="/shop/contact/" method="post">{% csrf_token %}
+    <div class="container">
+        <h5> <b>Please Fill in The Below Details*</b></h5>
+
+        <div class="form-group">
+            <label for="Name"></label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Type Your Name*" >
+        </div>
+
+        <div class="form-group">
+            <label for="Email"></label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Your Email*">
+        </div>
+
+
+        <div class="form-group">
+            <label for="phone"></label>
+            <input type="tel" name="phone" class="form-control" id="phone" placeholder="Your Phone Number*">
+        </div>
+
+        <div class="form-group">
+            <label for="desc"></label>
+            <textarea name="desc" class="form-control" id="desc" rows="4" placeholder="How May We Help You">My Issue Is--</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success b" id="submit">✔Send..</button>
+
+    </div>
+</form>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    x = document.getElementById("submit");
+    x.onclick = function(){
+        confirm('Are You Sure');
+        alert('✅Submit Success! we will get to you soon.');
+    }
+
+</script>
+{% endblock %}
